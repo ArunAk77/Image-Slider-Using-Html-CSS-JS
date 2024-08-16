@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stylish Image Slider</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<style>
+    body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    /* background: linear-gradient(45deg, #6a11cb, #2575fc); */
+    background-image: url(https://img2.wallspic.com/crops/4/4/4/3/7/173444/173444-mountain-landscape-nature-cloud-atmosphere-7680x4320.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-family: 'Arial', sans-serif;
+    overflow: hidden;
+}
+
+.slider-container {
+    position: relative;
+    width: 80%;
+    max-width: 900px;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.slider {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.slide {
+    min-width: 100%;
+    height: 400px;
+    position: relative;
+    filter: brightness(0.7) saturate(1.2);
+    transition: filter 0.5s ease;
+}
+
+.slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 15px;
+}
+
+.details {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    color: #fff;
+    text-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+.details h2 {
+    font-size: 28px;
+    margin: 0;
+    padding: 0;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.details p {
+    font-size: 18px;
+    margin-top: 10px;
+    opacity: 0.8;
+    animation: fadeIn 1s ease-in-out 0.5s;
+}
+
+.prev-btn, .next-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 30px;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.5);
+    border: none;
+    border-radius: 50%;
+    padding: 10px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    z-index: 100;
+}
+
+.prev-btn:hover, .next-btn:hover {
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.prev-btn {
+    left: 10px;
+}
+
+.next-btn {
+    right: 10px;
+}
+
+.message {
+    position: absolute;
+    bottom: 10px;
+    right: 20px;
+    color: #fff;
+    font-size: 20px;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 10px 20px;
+    border-radius: 25px;
+    text-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    animation: fadeInUp 1.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+</style>
+<body>
+    <div class="slider-container">
+        <div class="slider">
+            <div class="slide active">
+                <img src="https://img2.wallspic.com/crops/1/9/1/0/7/170191/170191-yosemite_national_park-usa-yosemite_valley-yosemite_falls-yosemite_village-7680x4320.jpg" alt="Image 1">
+                <div class="details">
+                    <h2>Beautiful Landscape </h2>
+                    <p>A mesmerizing view of the mountains at sunset. Nature's beauty at its best.</p>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="https://img1.wallspic.com/crops/9/9/5/2/7/172599/172599-banff_national_park-moraine_lake-nature-national_park-banff-7680x4320.jpg" alt="Image 2">
+                <div class="details">
+                    <h2>Beautiful Landscape </h2>
+                    <p>Tranquil waters and serene skies, a perfect escape from the hustle and bustle.</p>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="https://img3.wallspic.com/crops/9/7/6/2/7/172679/172679-highland-barentsburg-mountain-water-cloud-7680x4320.jpg" alt="Image 3">
+                <div class="details">
+                    <h2>Beautiful Landscape</h2>
+                    <p>A lush green forest, where every corner invites you to explore more.</p>
+                </div>
+            </div>
+        </div>
+        <button class="prev-btn">❮</button>
+        <button class="next-btn">❯</button>
+        <div class="message">Experience the Beauty of Nature</div>
+    </div>
+    <script>
+        const slides = document.querySelectorAll('.slide');
+const nextButton = document.querySelector('.next-btn');
+const prevButton = document.querySelector('.prev-btn');
+let currentIndex = 0;
+
+function showSlide(index) {
+    slides.forEach((slide, i) => {
+        slide.classList.remove('active');
+        if (i === index) {
+            slide.classList.add('active');
+        }
+    });
+    document.querySelector('.slider').style.transform = `translateX(-${index * 100}%)`;
+}
+
+nextButton.addEventListener('click', () => {
+    currentIndex = (currentIndex + 1) % slides.length;
+    showSlide(currentIndex);
+});
+
+prevButton.addEventListener('click', () => {
+    currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+    showSlide(currentIndex);
+});
+
+window.onload = () => {
+    showSlide(currentIndex);
+};
+
+    </script>
+</body>
+</html>
